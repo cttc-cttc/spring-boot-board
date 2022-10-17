@@ -6,18 +6,17 @@
 - Java		: 1.8
 - eclipse		: 2022-03 Eclipse IDE for Enterprise Java and Web Developers  
 - spring boot	: 2.7.4
-- MySQL		: 
 
 ### Dependences 체크항목
 - Developer Tools
--- Spring Boot DevTools
--- Lombok
--- Spring Configuration Processor
+  * Spring Boot DevTools
+  * Lombok
+  * Spring Configuration Processor
 - SQL
--- Spring Data JPA
--- MyBatis Framework
--- MySQL Driver
+  * Spring Data JPA
+  * MyBatis Framework
+  * MySQL Driver
 - Template Engines
--- Thymeleaf
+  * Thymeleaf
 - Web
--- Spring Web
+  * Spring Web
