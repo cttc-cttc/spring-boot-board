@@ -3,15 +3,19 @@ package com.study.domain.post;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.common.dto.MessageDto;
+import com.study.common.dto.SearchDto;
+import com.study.paging.PagingResponse;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,9 +49,9 @@ public class PostController {
 
     // 게시글 리스트 페이지
     @GetMapping("/post/list.do")
-    public String openPostList(Model model) {
-    	List<PostResponse> posts = postService.findAllPost();
-    	model.addAttribute("posts", posts);
+    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model) {
+    	PagingResponse<PostResponse> response = postService.findAllPost(params);
+    	model.addAttribute("response", response);
     	return "post/list";
     }
     
@@ -69,9 +73,12 @@ public class PostController {
     
     // 게시글 삭제
     @PostMapping("/post/delete.do")
-    public String deletePost(@RequestParam final Long id, Model model) {
+    public String deletePost(@RequestParam final Long id,
+                             @RequestParam final Map<String, Object> queryParams,
+                             Model model) {
+
         postService.deletePost(id);
-        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/post/list.do", RequestMethod.GET, queryParams);
         return showMessageAndRedirect(message, model);
     }
     
